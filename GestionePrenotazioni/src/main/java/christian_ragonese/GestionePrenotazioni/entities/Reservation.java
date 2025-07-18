@@ -2,10 +2,7 @@ package christian_ragonese.GestionePrenotazioni.entities;
 
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -13,6 +10,7 @@ import java.time.LocalDate;
 @Table(name = "reservations")
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 
 public class Reservation {

@@ -35,6 +35,7 @@ public class MyRunner implements CommandLineRunner {
         List<Workstation> workstationBuilding1 = new ArrayList<>();
         List<Workstation> workstationBuilding2 = new ArrayList<>();
         List<Reservation> pinosReservation = new ArrayList<>();
+        List<Reservation> francosReservation = new ArrayList<>();
 
 
         //BUILDINGS
@@ -64,20 +65,37 @@ public class MyRunner implements CommandLineRunner {
         workstationBuilding2.add(workstation4);
         workstationBuilding2.add(workstation6);
         // utilizzo lambda perchè orElseThrow vuole un Supplier
+
         Workstation workstationDb1 = workstationService.findByDescription("postazionenumero1").orElseThrow(() -> new WorkstationNotFoundException(workstation1.getDescription()));
+        Workstation workstationDb2 = workstationService.findByDescription("postazionenumero2").orElseThrow(() -> new WorkstationNotFoundException(workstation2.getDescription()));
+        Workstation workstationDb3 = workstationService.findByDescription("postazionenumero3").orElseThrow(() -> new WorkstationNotFoundException(workstation3.getDescription()));
         //USER
         User user1 = new User("pino.pinetto", "pino", "pinetto", "pino.pinetto@pino.com", pinosReservation);
         userService.saveNewUser(user1);
         User userDb1 = userService.findByUsername("pino.pinetto").orElseThrow(() -> new UserNotFoundException(user1.getUsername()));
 
+        User user2 = new User("franco.conetto", "franco", "conetto", "franco.conetto@franco.com", francosReservation);
+        userService.saveNewUser(user2);
+        User userDb2 = userService.findByUsername("franco.conetto").orElseThrow(() -> new UserNotFoundException(user2.getUsername()));
+
         //RESERVATION
         Reservation reservation1 = new Reservation(workstationDb1, userDb1, LocalDate.now());
         reservationService.saveNewReservation(reservation1);
 
-        //METHODS
+        Reservation reservation2 = new Reservation(workstationDb2, userDb2, LocalDate.now());
+        reservationService.saveNewReservation(reservation2);
 
-        List<Workstation> found = workstationService.findByTypeAndCity(WorkstationType.MEETINGROOM, "Rome");
-        found.forEach(o -> System.out.println(o.getDescription()));
+        Reservation reservation3 = new Reservation(workstationDb3, userDb2, LocalDate.of(2025, 7, 19));
+        reservationService.saveNewReservation(reservation3);
+        pinosReservation.add(reservation1);
+        francosReservation.add(reservation2);
+        francosReservation.add(reservation3);
+        //METHODS
+        System.out.println("");
+        System.out.println("RICERCA POSTAZIONE PER TIPOLOGIA E CITTA'");
+        System.out.println("");
+        List<Workstation> found = workstationService.findByTypeAndCity(WorkstationType.MEETINGROOM, "Romee");
+        found.forEach(o -> System.out.println("Postazione trovata con descrizione :  " + o.getDescription()));
 
     }
 }

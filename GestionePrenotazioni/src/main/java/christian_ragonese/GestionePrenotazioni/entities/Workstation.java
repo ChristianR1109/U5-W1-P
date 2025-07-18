@@ -1,15 +1,13 @@
 package christian_ragonese.GestionePrenotazioni.entities;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @Entity
 @Table(name = "workstations")
@@ -27,6 +25,7 @@ public class Workstation {
     private Building building;
     @OneToMany(mappedBy = "workstation")
     private List<Reservation> reservationsList;
+
     public Workstation(String description, WorkstationType type, int n_max, Building building, List<Reservation> reservationsList) {
         this.description = description;
         this.type = type;

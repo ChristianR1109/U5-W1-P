@@ -17,6 +17,7 @@ public class WorkstationService {
     WorkstationRepository workstationRepository;
 
     public Optional<Workstation> findByDescription(String description) {
+
         return workstationRepository.findByDescription(description);
     }
 
@@ -33,6 +34,13 @@ public class WorkstationService {
     }
 
     public List<Workstation> findByTypeAndCity(WorkstationType type, String city) {
-        return workstationRepository.findByTypeAndBuilding_City(type, city);
+
+        List<Workstation> workstationList = workstationRepository.findByTypeAndBuilding_City(type, city);
+
+        if (workstationList.isEmpty()) {
+            System.out.println("Non è stata trovata alcuna postazione con tipologia " + type + " nella città " + city);
+        }
+        return workstationList;
+
     }
 }
