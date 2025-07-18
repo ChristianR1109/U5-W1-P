@@ -1,0 +1,64 @@
+package christian_ragonese.GestionePrenotazioni;
+
+import christian_ragonese.GestionePrenotazioni.entities.*;
+import christian_ragonese.GestionePrenotazioni.services.BuildingService;
+import christian_ragonese.GestionePrenotazioni.services.ReservationService;
+import christian_ragonese.GestionePrenotazioni.services.UserService;
+import christian_ragonese.GestionePrenotazioni.services.WorkstationService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@Component
+@Slf4j
+public class MyRunner implements CommandLineRunner {
+    @Autowired
+    private BuildingService buildingService;
+    @Autowired
+    private ReservationService reservationService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private WorkstationService workstationService;
+
+    @Override
+    public void run(String... args) throws Exception {
+        List<Reservation> reservationList1 = new ArrayList<>();
+        List<Reservation> reservationList2 = new ArrayList<>();
+        List<Workstation> workstationBuilding1 = new ArrayList<>();
+        List<Workstation> workstationBuilding2 = new ArrayList<>();
+        List<Reservation> pinosReservation = new ArrayList<>();
+
+
+        //BUILDINGS
+        Building building1 = new Building("Building1", "Street 23", "NewYork", workstationBuilding1);
+        Building building2 = new Building("Building2", "Street 24", "NewYork", workstationBuilding2);
+        //WORKSTATION
+        Workstation workstation1 = new Workstation("postazionenumero1", WorkstationType.MEETINGROOM, 30, building1, reservationList1);
+        Workstation workstation2 = new Workstation("postazionenumero2", WorkstationType.OPENSPACE, 25, building2, reservationList2);
+        Workstation workstation3 = new Workstation("postazionenumero3", WorkstationType.PRIVATE, 20, building1, reservationList1);
+        Workstation workstation4 = new Workstation("postazionenumero4", WorkstationType.MEETINGROOM, 40, building2, reservationList2);
+        Workstation workstation5 = new Workstation("postazionenumero5", WorkstationType.OPENSPACE, 15, building1, reservationList1);
+        Workstation workstation6 = new Workstation("postazionenumero6", WorkstationType.PRIVATE, 10, building2, reservationList1);
+
+        workstationBuilding1.add(workstation1);
+        workstationBuilding1.add(workstation3);
+        workstationBuilding1.add(workstation5);
+
+        workstationBuilding2.add(workstation2);
+        workstationBuilding2.add(workstation4);
+        workstationBuilding2.add(workstation6);
+        //USER
+        User user1 = new User("pino.pinetto", "pino", "pinetto", "pino.pinetto@pino.com", pinosReservation);
+
+        //RESERVATION
+        Reservation reservation1 = new Reservation(workstation1, user1, LocalDate.now());
+
+
+    }
+}

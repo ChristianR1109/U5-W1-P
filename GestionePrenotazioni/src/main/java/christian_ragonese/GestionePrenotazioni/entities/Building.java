@@ -14,6 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+
 public class Building {
 
     @Id
@@ -27,4 +28,10 @@ public class Building {
     @OneToMany(mappedBy = "building")
     private List<Workstation> workstaionList;
 
+    public Building(String name, String address, String city, List<Workstation> workstaionList) {
+        this.name = name;
+        this.address = address;
+        this.city = city;
+        this.workstaionList = workstaionList;
+    }
 }

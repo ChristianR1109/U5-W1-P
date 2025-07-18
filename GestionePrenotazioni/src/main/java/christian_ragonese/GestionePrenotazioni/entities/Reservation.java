@@ -28,4 +28,9 @@ public class Reservation {
     private Long id;
     private LocalDate res_date;
 
+    public Reservation(Workstation workstation, User user, LocalDate res_date) {
+        this.workstation = workstation;
+        this.user = user;
+        this.res_date = res_date;
+    }
 }
