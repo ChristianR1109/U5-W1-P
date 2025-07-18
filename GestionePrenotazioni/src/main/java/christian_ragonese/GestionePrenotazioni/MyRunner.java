@@ -1,6 +1,8 @@
 package christian_ragonese.GestionePrenotazioni;
 
 import christian_ragonese.GestionePrenotazioni.entities.*;
+import christian_ragonese.GestionePrenotazioni.exceptions.UserNotFoundException;
+import christian_ragonese.GestionePrenotazioni.exceptions.WorkstationNotFoundException;
 import christian_ragonese.GestionePrenotazioni.services.BuildingService;
 import christian_ragonese.GestionePrenotazioni.services.ReservationService;
 import christian_ragonese.GestionePrenotazioni.services.UserService;
@@ -61,12 +63,16 @@ public class MyRunner implements CommandLineRunner {
         workstationBuilding2.add(workstation2);
         workstationBuilding2.add(workstation4);
         workstationBuilding2.add(workstation6);
+        // utilizzo lambda perchè orElseThrow vuole un Supplier
+        Workstation workstationDb1 = workstationService.findByDescription("postazionenumero1").orElseThrow(() -> new WorkstationNotFoundException(workstation1.getDescription()));
         //USER
         User user1 = new User("pino.pinetto", "pino", "pinetto", "pino.pinetto@pino.com", pinosReservation);
         userService.saveNewUser(user1);
-        //RESERVATION
-        Reservation reservation1 = new Reservation(workstation1, user1, LocalDate.now());
+        User userDb1 = userService.findByUsername("pino.pinetto").orElseThrow(() -> new UserNotFoundException(user1.getUsername()));
 
+        //RESERVATION
+        Reservation reservation1 = new Reservation(workstationDb1, userDb1, LocalDate.now());
+        reservationService.saveNewReservation(reservation1);
 
         //METHODS
 

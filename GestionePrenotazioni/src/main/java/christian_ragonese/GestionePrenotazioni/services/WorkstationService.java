@@ -16,8 +16,13 @@ public class WorkstationService {
     @Autowired
     WorkstationRepository workstationRepository;
 
+    public Optional<Workstation> findByDescription(String description) {
+        return workstationRepository.findByDescription(description);
+    }
+
     public void saveNewWorkstation(Workstation workstation) {
-        Optional<Workstation> exWorkstation = workstationRepository.findByDescription(workstation.getDescription());
+        Optional<Workstation> exWorkstation = findByDescription(workstation.getDescription());
+
         if (exWorkstation.isPresent()) {
             System.out.println("La postazione " + workstation.getDescription() + " esiste già ");
 
