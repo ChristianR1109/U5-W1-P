@@ -36,8 +36,10 @@ public class MyRunner implements CommandLineRunner {
 
 
         //BUILDINGS
-        Building building1 = new Building("Building1", "Street 23", "NewYork", workstationBuilding1);
-        Building building2 = new Building("Building2", "Street 24", "NewYork", workstationBuilding2);
+        Building building1 = new Building("Building1", "Street 23", "Rome", workstationBuilding1);
+        Building building2 = new Building("Building2", "Street 24", "Rome", workstationBuilding2);
+        buildingService.saveNewBuilding(building1);
+        buildingService.saveNewBuilding(building2);
         //WORKSTATION
         Workstation workstation1 = new Workstation("postazionenumero1", WorkstationType.MEETINGROOM, 30, building1, reservationList1);
         Workstation workstation2 = new Workstation("postazionenumero2", WorkstationType.OPENSPACE, 25, building2, reservationList2);
@@ -45,6 +47,12 @@ public class MyRunner implements CommandLineRunner {
         Workstation workstation4 = new Workstation("postazionenumero4", WorkstationType.MEETINGROOM, 40, building2, reservationList2);
         Workstation workstation5 = new Workstation("postazionenumero5", WorkstationType.OPENSPACE, 15, building1, reservationList1);
         Workstation workstation6 = new Workstation("postazionenumero6", WorkstationType.PRIVATE, 10, building2, reservationList1);
+        workstationService.saveNewWorkstation(workstation1);
+        workstationService.saveNewWorkstation(workstation2);
+        workstationService.saveNewWorkstation(workstation3);
+        workstationService.saveNewWorkstation(workstation4);
+        workstationService.saveNewWorkstation(workstation5);
+        workstationService.saveNewWorkstation(workstation6);
 
         workstationBuilding1.add(workstation1);
         workstationBuilding1.add(workstation3);
@@ -55,10 +63,15 @@ public class MyRunner implements CommandLineRunner {
         workstationBuilding2.add(workstation6);
         //USER
         User user1 = new User("pino.pinetto", "pino", "pinetto", "pino.pinetto@pino.com", pinosReservation);
-
+        userService.saveNewUser(user1);
         //RESERVATION
         Reservation reservation1 = new Reservation(workstation1, user1, LocalDate.now());
 
+
+        //METHODS
+
+        List<Workstation> found = workstationService.findByTypeAndCity(WorkstationType.MEETINGROOM, "Rome");
+        found.forEach(o -> System.out.println(o.getDescription()));
 
     }
 }

@@ -26,11 +26,11 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private Long id;
-    private LocalDate res_date;
+    private LocalDate date;
 
-    public Reservation(Workstation workstation, User user, LocalDate res_date) {
+    public Reservation(Workstation workstation, User user, LocalDate date) {
         this.workstation = workstation;
         this.user = user;
-        this.res_date = res_date;
+        this.date = date;
     }
 }
